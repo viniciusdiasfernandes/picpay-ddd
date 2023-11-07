@@ -1,0 +1,64 @@
+version: '3'
+services:
+
+ #PHP Service
+ picpay_api:
+  build:
+   context: .
+   dockerfile: Dockerfile
+  image: php:8.2-fpm
+  container_name: picpay_api
+  restart: unless-stopped
+  tty: true
+  environment:
+   SERVICE_NAME: picpay_api
+   SERVICE_TAGS: dev
+  working_dir: /var/www/
+  volumes:
+   - ../api:/var/www/
+   - ./php/local.ini:/usr/local/etc/php/app.conf/local.ini
+  networks:
+   - app-network
+
+ #Nginx Service
+ picpay_nginx:
+  image: nginx:alpine
+  container_name: picpay_nginx
+  restart: unless-stopped
+  tty: true
+  ports:
+   - "80:80"
+   - "443:443"
+  volumes:
+   - ../api:/var/www/
+   - ./nginx/conf.d/:/etc/nginx/conf.d/
+  networks:
+   - app-network
+
+ #MySQL Service
+ picpay_mysql:
+  image: mysql:latest
+  container_name: picpay_mysql
+  restart: unless-stopped
+  tty: true
+  ports:
+   - "3306:3306"
+  environment:
+   MYSQL_DATABASE: picpay-api
+   MYSQL_ROOT_PASSWORD: test123
+   SERVICE_TAGS: dev
+   SERVICE_NAME: mysql
+  volumes:
+   - mysql_data:/var/lib/mysql/
+   - ./mysql/my.cnf:/etc/mysql/my.cnf
+  networks:
+   - app-network
+
+#Docker Networks
+networks:
+ app-network:
+  driver: bridge
+#Volumes
+volumes:
+ mysql_data:
+  driver: local
