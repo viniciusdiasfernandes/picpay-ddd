@@ -11,11 +11,12 @@ use App\Domain\User\Email;
 use App\Domain\User\HashPassword;
 use App\Domain\User\User;
 use App\Domain\User\UserType;
+use App\Infra\DI\Registry;
 use Exception;
 
 class CreateUser
 {
-    public function __construct(readonly UserRepository $userRepository)
+    public function __construct()
     {
     }
 
@@ -30,12 +31,12 @@ class CreateUser
         }
         $document = DocumentFactory::create($type, $input->document);
         $email = new Email($input->email);
-        $user = $this->userRepository->getByEmailAndDocument($email, $document);
+        $user = Registry::getInstance()->get("userRepository")->getByEmailAndDocument($email, $document);
         if ($user) {
             throw new Exception("User already exists");
         }
         $user = User::create($input->firstName, $input->lastName, $document, $email, HashPassword::create($input->password), $type, 0);
-        $accountId = $this->userRepository->save($user);
+        $accountId = Registry::getInstance()->get("userRepository")->save($user);
         return new CreateUserOutput(
             $user->firstName,
             $user->lastName,

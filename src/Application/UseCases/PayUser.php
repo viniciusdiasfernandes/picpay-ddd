@@ -5,13 +5,13 @@ namespace App\Application\UseCases;
 use App\Application\Repository\PaymentRepository;
 use App\Application\Repository\UserRepository;
 use App\Application\UseCases\DTO\ProcessPaymentInput;
-use App\Application\UseCases\DTO\StartPaymentInput;
-use App\Application\UseCases\DTO\StartPaymentOutput;
+use App\Application\UseCases\DTO\PayUserInput;
+use App\Application\UseCases\DTO\PayUserOutput;
 use App\Domain\Payment\Payment;
 use App\Infra\Gateway\PaymentGateway;
 use Exception;
 
-readonly class DoPayment
+readonly class PayUser
 {
     public function __construct(
         public UserRepository    $userRepository,
@@ -24,7 +24,7 @@ readonly class DoPayment
     /**
      * @throws Exception
      */
-    public function execute(StartPaymentInput $input): StartPaymentOutput
+    public function execute(PayUserInput $input): PayUserOutput
     {
         $sender = $this->userRepository->get($input->senderId);
         if (!$sender) throw new Exception("Sender do not exists.");
@@ -43,14 +43,14 @@ readonly class DoPayment
             $this->paymentRepository->update($payment);
             $sender->increaseBalance($input->amount);
             $this->userRepository->update($sender);
-            return new StartPaymentOutput(amount: $input->amount, senderId: $input->senderId, receiverId: $input->receiverId, timestamp: time());
+            return new PayUserOutput(amount: $input->amount, senderId: $input->senderId, receiverId: $input->receiverId, timestamp: time());
         }
         $payment->finish();
         $receiver->increaseBalance($input->amount);
         $this->paymentRepository->update($payment);
         $this->userRepository->update($sender);
         $this->userRepository->update($receiver);
-        return new StartPaymentOutput(amount: $input->amount, senderId: $input->senderId, receiverId: $input->receiverId, timestamp: time());
+        return new PayUserOutput(amount: $input->amount, senderId: $input->senderId, receiverId: $input->receiverId, timestamp: time());
 
 
     }

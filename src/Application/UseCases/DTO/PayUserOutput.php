@@ -2,7 +2,7 @@
 
 namespace App\Application\UseCases\DTO;
 
-readonly class StartPaymentOutput
+readonly class PayUserOutput
 {
     public function __construct(
         public float $amount,

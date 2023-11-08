@@ -2,8 +2,8 @@
 
 namespace Tests\integration;
 
-use App\Application\UseCases\DoPayment;
-use App\Application\UseCases\DTO\StartPaymentInput;
+use App\Application\UseCases\PayUser;
+use App\Application\UseCases\DTO\PayUserInput;
 use App\Domain\User\Cpf;
 use App\Domain\User\Email;
 use App\Domain\User\HashPassword;
@@ -28,13 +28,13 @@ class DoPaymentTest extends TestCase
         $userRepository = new UserRepositoryDatabase($connection);;
         $paymentRepository = new PaymentRepositoryDatabase($connection);
         $paymentGateway = new PaymentReturnTrueGateway();
-        $startPayment = new DoPayment($userRepository, $paymentRepository, $paymentGateway);
+        $startPayment = new PayUser($userRepository, $paymentRepository, $paymentGateway);
         $userId = $this->createUser();
         $sender = $userRepository->get($userId);
         $sender->increaseBalance(100);
         $userRepository->update($sender);
         $receiverId = $this->createUser();
-        $input = new StartPaymentInput(amount: 100, senderId: $sender->id, receiverId: $receiverId, timestamp: time());
+        $input = new PayUserInput(amount: 100, senderId: $sender->id, receiverId: $receiverId, timestamp: time());
         $startPayment->execute($input);
         $connection->close();
     }
@@ -48,13 +48,13 @@ class DoPaymentTest extends TestCase
         $userRepository = new UserRepositoryDatabase($connection);;
         $paymentRepository = new PaymentRepositoryDatabase($connection);
         $paymentGateway = new PaymentReturnFalseGateway();
-        $startPayment = new DoPayment($userRepository, $paymentRepository, $paymentGateway);
+        $startPayment = new PayUser($userRepository, $paymentRepository, $paymentGateway);
         $userId = $this->createUser();
         $sender = $userRepository->get($userId);
         $sender->increaseBalance(100);
         $userRepository->update($sender);
         $receiverId = $this->createUser();
-        $input = new StartPaymentInput(amount: 100, senderId: $sender->id, receiverId: $receiverId, timestamp: time());
+        $input = new PayUserInput(amount: 100, senderId: $sender->id, receiverId: $receiverId, timestamp: time());
         $startPayment->execute($input);
         $connection->close();
     }
