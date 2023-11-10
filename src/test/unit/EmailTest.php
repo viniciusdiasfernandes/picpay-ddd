@@ -2,7 +2,7 @@
 
 namespace Account\unit;
 
-use App\Domain\User\Email;
+use App\Domain\Account\Email;
 use Exception;
 use PHPUnit\Framework\TestCase;
 

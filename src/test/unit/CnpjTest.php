@@ -2,7 +2,7 @@
 
 namespace Account\unit;
 
-use App\Domain\User\Cnpj;
+use App\Domain\Account\Cnpj;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -18,5 +18,17 @@ class CnpjTest extends TestCase
     {
         $this->expectException(Exception::class);
         new Cnpj("76.513.400/");
+    }
+
+    public function testEmpty()
+    {
+        $this->expectException(Exception::class);
+        new Cnpj("");
+    }
+
+    public function testAllDigitsTheSame()
+    {
+        $this->expectException(Exception::class);
+        new Cnpj("77.777.777/7777-77");
     }
 }

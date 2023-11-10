@@ -12,20 +12,20 @@ class MainController
         $this->routes = [
             "POST" => [
                 "/signup" => [
-                    "class" => UserController::class,
+                    "class" => AccountController::class,
                     "method" => 'create'
                 ],
                 "/transfer" => [
-                    "class" => PaymentController::class,
-                    "method" => 'pay'
+                    "class" => TransactionController::class,
+                    "method" => 'create'
                 ],
             ],
             "GET" => [
                 "/"
             ]
         ];
-        $this->validateRoute($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"]);
-        $this->execute($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"]);
+//        $this->validateRoute($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"]);
+//        $this->execute($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"]);
     }
 
     public function execute(string $method, string $uri)

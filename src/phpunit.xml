@@ -13,10 +13,13 @@
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./Application</directory>
+            <directory suffix=".php">./Domain</directory>
+            <directory suffix=".php">./Infra</directory>
+            <directory prefix=".php-cs-fixer.">.</directory>
         </include>
         <report>
-            <html outputDirectory="/Coverage/html"/>
+            <html outputDirectory="./test/coverage/html"/>
         </report>
     </coverage>
 </phpunit>

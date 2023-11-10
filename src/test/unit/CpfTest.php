@@ -2,7 +2,7 @@
 
 namespace Account\unit;
 
-use App\Domain\User\Cpf;
+use App\Domain\Account\Cpf;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -26,6 +26,12 @@ class CpfTest extends TestCase
     {
         $this->expectException(Exception::class);
         new Cpf("999.999.999-99");
+    }
+
+    public function testEmptyCpf()
+    {
+        $this->expectException(Exception::class);
+        new Cpf("");
     }
 
     public function cpfProvider(): array

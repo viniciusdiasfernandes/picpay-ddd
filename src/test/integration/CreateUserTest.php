@@ -3,13 +3,16 @@
 namespace Tests\integration;
 
 
-use App\Application\UseCases\CreateUser;
-use App\Application\UseCases\DTO\CreateUserInput;
-use App\Domain\User\UserType;
+use App\Application\UseCases\Signup;
+use App\Application\UseCases\DTO\SignupInput;
+use App\Domain\Account\AccountType;
+use App\Domain\Account\Cpf;
 use App\Infra\Database\MySqlPromiseAdapter;
-use App\Infra\Repository\UserRepositoryDatabase;
+use App\Infra\DI\Registry;
+use App\Infra\Repository\AccountRepositoryDatabase;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use ValueError;
 
 
 class CreateUserTest extends TestCase
@@ -17,15 +20,16 @@ class CreateUserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testCreateCommonUserWithSuccess()
+    public function testCreateCommonAccountWithSuccess()
     {
         $connection = new MySqlPromiseAdapter();
-        $userRepository = new UserRepositoryDatabase($connection);
-        $signup = new CreateUser($userRepository);
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $signup = new Signup();
         $randomEmail = "vinidiax" . rand(1000, 9999) . "@gmail.com";
         $randomCpf = GenerateCpf::cpfRandom();
-        $type = UserType::Common->value;
-        $input = new CreateUserInput(
+        $type = AccountType::Common->value;
+        $input = new SignupInput(
             "Vinicius",
             "Fernandes",
             $randomCpf,
@@ -34,7 +38,7 @@ class CreateUserTest extends TestCase
             $type,
         );
         $output = $signup->execute($input);
-        $user = $userRepository->get($output->userId);
+        $user = $accountRepository->get($output->userId);
         $this->assertEquals($input->firstName, $user->firstName);
         $this->assertEquals($input->document, $user->document->getValue());
         $this->assertEquals($input->email, $user->email->getValue());
@@ -44,15 +48,16 @@ class CreateUserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testCreateMerchantUserWithSuccess()
+    public function testCreateMerchantAccountWithSuccess()
     {
         $connection = new MySqlPromiseAdapter();
-        $userRepository = new UserRepositoryDatabase($connection);
-        $signup = new CreateUser($userRepository);
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $signup = new Signup();
         $randomEmail = "vinidiax" . rand(1000, 9999) . "@gmail.com";
         $randomCpf = GenerateCnpj::cnpjRandom();
-        $type = UserType::Merchant->value;
-        $input = new CreateUserInput(
+        $type = AccountType::Merchant->value;
+        $input = new SignupInput(
             "Vinicius",
             "Fernandes",
             $randomCpf,
@@ -61,7 +66,7 @@ class CreateUserTest extends TestCase
             $type,
         );
         $output = $signup->execute($input);
-        $user = $userRepository->get($output->userId);
+        $user = $accountRepository->get($output->userId);
         $this->assertEquals($input->firstName, $user->firstName);
         $this->assertEquals($input->document, $user->document->getValue());
         $this->assertEquals($input->email, $user->email->getValue());
@@ -71,14 +76,15 @@ class CreateUserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testCreateCommonUserExistentEmail()
+    public function testCreateCommonAccountExistentEmail()
     {
         $connection = new MySqlPromiseAdapter();
-        $userRepository = new UserRepositoryDatabase($connection);
-        $signup = new CreateUser($userRepository);
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $signup = new Signup();
         $randomCpf = GenerateCpf::cpfRandom();
-        $type = UserType::Common->value;
-        $input = new CreateUserInput(
+        $type = AccountType::Common->value;
+        $input = new SignupInput(
             "Vinicius",
             "Fernandes",
             $randomCpf,
@@ -95,13 +101,14 @@ class CreateUserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testCreateCommonUserExistentCpf()
+    public function testCreateCommonAccountExistentCpf()
     {
         $connection = new MySqlPromiseAdapter();
-        $userRepository = new UserRepositoryDatabase($connection);
-        $signup = new CreateUser($userRepository);
-        $type = UserType::Common->value;
-        $input = new CreateUserInput(
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $signup = new Signup();
+        $type = AccountType::Common->value;
+        $input = new SignupInput(
             "Vinicius",
             "Fernandes",
             "565.486.780-60",
@@ -118,14 +125,15 @@ class CreateUserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testCreateMerchantUserExistentEmail()
+    public function testCreateMerchantAccountExistentEmail()
     {
         $connection = new MySqlPromiseAdapter();
-        $userRepository = new UserRepositoryDatabase($connection);
-        $signup = new CreateUser($userRepository);
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $signup = new Signup();
         $randomCnpj = GenerateCnpj::cnpjRandom();
-        $type = UserType::Merchant->value;
-        $input = new CreateUserInput(
+        $type = AccountType::Merchant->value;
+        $input = new SignupInput(
             "Vinicius",
             "Fernandes",
             $randomCnpj,
@@ -142,13 +150,14 @@ class CreateUserTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testCreateMerchantUserExistentCnpj()
+    public function testCreateMerchantAccountExistentCnpj()
     {
         $connection = new MySqlPromiseAdapter();
-        $userRepository = new UserRepositoryDatabase($connection);
-        $signup = new CreateUser($userRepository);
-        $type = UserType::Merchant->value;
-        $input = new CreateUserInput(
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $signup = new Signup();
+        $type = AccountType::Merchant->value;
+        $input = new SignupInput(
             "Vinicius",
             "Fernandes",
             "55.023.222/0001-11",
@@ -158,6 +167,28 @@ class CreateUserTest extends TestCase
         );
         $this->expectException(Exception::class);
         $signup->execute($input);
+        $signup->execute($input);
+        $connection->close();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testCreateNonexistentAccountType()
+    {
+        $connection = new MySqlPromiseAdapter();
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $signup = new Signup();
+        $input = new SignupInput(
+            "Vinicius",
+            "Fernandes",
+            GenerateCpf::cpfRandom(),
+            "vinidiax" . rand(1000, 9999) . "@gmail.com",
+            "password",
+            "test",
+        );
+        $this->expectException(Exception::class);
         $signup->execute($input);
         $connection->close();
     }
