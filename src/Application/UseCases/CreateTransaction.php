@@ -3,11 +3,13 @@
 namespace App\Application\UseCases;
 
 use App\Application\Repository\TransactionRepository;
+use App\Application\UseCases\DTO\MailerSendInput;
 use App\Application\UseCases\DTO\ProcessTransactionInput;
 use App\Application\UseCases\DTO\TransactionInput;
 use App\Application\UseCases\DTO\TransactionOutput;
 use App\Domain\Transaction\Transaction;
 use App\Infra\DI\Registry;
+use App\Infra\Gateway\MailerGateway;
 use App\Infra\Gateway\TransactionGateway;
 use Exception;
 
@@ -15,7 +17,8 @@ class CreateTransaction
 {
     public function __construct(
         public TransactionRepository $transactionRepository,
-        public TransactionGateway    $transactionGateway
+        public TransactionGateway    $transactionGateway,
+        public MailerGateway    $mailerGateway
     )
     {
     }
@@ -49,6 +52,11 @@ class CreateTransaction
         $this->transactionRepository->update($transaction);
         Registry::getInstance()->get("accountRepository")->update($sender);
         Registry::getInstance()->get("accountRepository")->update($receiver);
+        $this->mailerGateway->send(new MailerSendInput(
+            "vinidiax@gmail.com",
+            "test",
+            "test"
+        ));
         return new TransactionOutput(amount: $input->amount, senderId: $input->senderId, receiverId: $input->receiverId, timestamp: time());
 
 

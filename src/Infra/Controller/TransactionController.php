@@ -5,6 +5,7 @@ namespace App\Infra\Controller;
 use App\Application\UseCases\CreateTransaction;
 use App\Application\UseCases\DTO\TransactionInput;
 use App\Infra\Database\MySqlPromiseAdapter;
+use App\Infra\Gateway\EmailSystemGateway;
 use App\Infra\Gateway\TransactionReturnTrueGateway;
 use App\Infra\Repository\TransactionRepositoryDatabase;
 use Exception;
@@ -29,7 +30,8 @@ class TransactionController
         $connection = new MySqlPromiseAdapter();
         $transactionRepository = new TransactionRepositoryDatabase($connection);
         $transactionGateway = new TransactionReturnTrueGateway();
-        $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway);
+        $emailSystemGateway = new EmailSystemGateway();
+        $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway, $emailSystemGateway);
         $output = $createTransaction->execute($input);
         return new Response(json_encode($output), Response::HTTP_CREATED);
     }

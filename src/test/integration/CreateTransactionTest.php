@@ -11,6 +11,7 @@ use App\Domain\Account\Email;
 use App\Domain\Account\HashPassword;
 use App\Infra\Database\MySqlPromiseAdapter;
 use App\Infra\DI\Registry;
+use App\Infra\Gateway\EmailSystemGateway;
 use App\Infra\Gateway\TransactionReturnFalseGateway;
 use App\Infra\Gateway\TransactionReturnTrueGateway;
 use App\Infra\Repository\AccountRepositoryDatabase;
@@ -30,7 +31,8 @@ class CreateTransactionTest extends TestCase
         Registry::getInstance()->set("accountRepository", $accountRepository);
         $transactionRepository = new TransactionRepositoryDatabase($connection);
         $transactionGateway = new TransactionReturnTrueGateway();
-        $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway);
+        $emailSystemGateway = new EmailSystemGateway();
+        $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway, $emailSystemGateway);
         $senderAccountId = $this->createAccount(AccountType::Common->value);
         $senderAccountInput = $accountRepository->get($senderAccountId);
         $amount = 100;
@@ -57,7 +59,8 @@ class CreateTransactionTest extends TestCase
         Registry::getInstance()->set("accountRepository", $accountRepository);
         $transactionRepository = new TransactionRepositoryDatabase($connection);
         $transactionGateway = new TransactionReturnFalseGateway();
-        $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway);
+        $emailSystemGateway = new EmailSystemGateway();
+        $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway, $emailSystemGateway);
         $senderAccountId = $this->createAccount(AccountType::Common->value);
         $senderAccountInput = $accountRepository->get($senderAccountId);
         $amount = 100;
