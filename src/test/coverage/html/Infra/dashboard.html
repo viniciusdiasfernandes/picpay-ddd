@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /var/www/Infra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css?v=9.2.29" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css?v=9.2.29" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css?v=9.2.29" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">/var/www</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Infra</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controller/AccountController.php.html#13">App\Infra\Controller\AccountController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/CreateAccountValidator.php.html#7">App\Infra\Controller\CreateAccountValidator</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/CreateTransactionValidator.php.html#7">App\Infra\Controller\CreateTransactionValidator</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/MainController.php.html#5">App\Infra\Controller\MainController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/TransactionController.php.html#19">App\Infra\Controller\TransactionController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Kernel.php.html#8">App\Infra\Http\Kernel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Request.php.html#5">App\Infra\Http\Request</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Response.php.html#5">App\Infra\Http\Response</a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controller/MainController.php.html#5">App\Infra\Controller\MainController</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Http/Kernel.php.html#8">App\Infra\Http\Kernel</a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controller/AccountController.php.html#15"><abbr title="App\Infra\Controller\AccountController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/AccountController.php.html#23"><abbr title="App\Infra\Controller\AccountController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/CreateAccountValidator.php.html#18"><abbr title="App\Infra\Controller\CreateAccountValidator::validate">validate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/CreateTransactionValidator.php.html#14"><abbr title="App\Infra\Controller\CreateTransactionValidator::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/CreateTransactionValidator.php.html#18"><abbr title="App\Infra\Controller\CreateTransactionValidator::validate">validate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/MainController.php.html#10"><abbr title="App\Infra\Controller\MainController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/MainController.php.html#31"><abbr title="App\Infra\Controller\MainController::execute">execute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/MainController.php.html#42"><abbr title="App\Infra\Controller\MainController::validateRoute">validateRoute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/TransactionController.php.html#24"><abbr title="App\Infra\Controller\TransactionController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Kernel.php.html#10"><abbr title="App\Infra\Http\Kernel::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Request.php.html#7"><abbr title="App\Infra\Http\Request::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Request.php.html#17"><abbr title="App\Infra\Http\Request::createFromGlobals">createFromGlobals</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Request.php.html#22"><abbr title="App\Infra\Http\Request::getPathInfo">getPathInfo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Request.php.html#27"><abbr title="App\Infra\Http\Request::getMethod">getMethod</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Response.php.html#7"><abbr title="App\Infra\Http\Response::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Response.php.html#15"><abbr title="App\Infra\Http\Response::send">send</abbr></a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controller/MainController.php.html#31"><abbr title="App\Infra\Controller\MainController::execute">execute</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controller/MainController.php.html#42"><abbr title="App\Infra\Controller\MainController::validateRoute">validateRoute</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Kernel.php.html#10"><abbr title="App\Infra\Http\Kernel::handle">handle</abbr></a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.29</a> using <a href="https://secure.php.net/" target="_top">PHP 8.2.12</a> and <a href="https://phpunit.de/">PHPUnit 9.6.13</a> at Mon Nov 13 8:54:38 UTC 2023.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/jquery.min.js?v=9.2.29" type="text/javascript"></script>
+  <script src="../_js/d3.min.js?v=9.2.29" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js?v=9.2.29" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([8,0,0,0,0,0,0,0,0,0,0,18], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([16,0,0,0,0,0,0,0,0,0,0,30], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,2,"<a href=\"Controller\/AccountController.php.html#13\">App\\Infra\\Controller\\AccountController<\/a>"],[0,1,"<a href=\"Controller\/CreateAccountValidator.php.html#7\">App\\Infra\\Controller\\CreateAccountValidator<\/a>"],[0,2,"<a href=\"Controller\/CreateTransactionValidator.php.html#7\">App\\Infra\\Controller\\CreateTransactionValidator<\/a>"],[0,5,"<a href=\"Controller\/MainController.php.html#5\">App\\Infra\\Controller\\MainController<\/a>"],[0,1,"<a href=\"Controller\/TransactionController.php.html#19\">App\\Infra\\Controller\\TransactionController<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsAlphanumeric.php.html#5\">App\\Infra\\Controller\\Validator\\IsAlphanumeric<\/a>"],[100,4,"<a href=\"Controller\/Validator\/IsBetween.php.html#5\">App\\Infra\\Controller\\Validator\\IsBetween<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsEmail.php.html#5\">App\\Infra\\Controller\\Validator\\IsEmail<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsIn.php.html#5\">App\\Infra\\Controller\\Validator\\IsIn<\/a>"],[100,2,"<a href=\"Controller\/Validator\/IsInt.php.html#5\">App\\Infra\\Controller\\Validator\\IsInt<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsMax.php.html#5\">App\\Infra\\Controller\\Validator\\IsMax<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsMin.php.html#5\">App\\Infra\\Controller\\Validator\\IsMin<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsRequired.php.html#5\">App\\Infra\\Controller\\Validator\\IsRequired<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsSame.php.html#5\">App\\Infra\\Controller\\Validator\\IsSame<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsSecure.php.html#5\">App\\Infra\\Controller\\Validator\\IsSecure<\/a>"],[100,6,"<a href=\"Controller\/Validator\/Validator.php.html#8\">App\\Infra\\Controller\\Validator\\Validator<\/a>"],[100,11,"<a href=\"Controller\/Validator\/ValidatorFactory.php.html#5\">App\\Infra\\Controller\\Validator\\ValidatorFactory<\/a>"],[100,6,"<a href=\"DI\/Registry.php.html#5\">App\\Infra\\DI\\Registry<\/a>"],[100,4,"<a href=\"Database\/MySqlPromiseAdapter.php.html#8\">App\\Infra\\Database\\MySqlPromiseAdapter<\/a>"],[100,1,"<a href=\"Gateway\/TransactionReturnFalseGateway.php.html#8\">App\\Infra\\Gateway\\TransactionReturnFalseGateway<\/a>"],[100,1,"<a href=\"Gateway\/TransactionReturnTrueGateway.php.html#8\">App\\Infra\\Gateway\\TransactionReturnTrueGateway<\/a>"],[0,2,"<a href=\"Http\/Kernel.php.html#8\">App\\Infra\\Http\\Kernel<\/a>"],[0,4,"<a href=\"Http\/Request.php.html#5\">App\\Infra\\Http\\Request<\/a>"],[0,2,"<a href=\"Http\/Response.php.html#5\">App\\Infra\\Http\\Response<\/a>"],[100,7,"<a href=\"Repository\/AccountRepositoryDatabase.php.html#15\">App\\Infra\\Repository\\AccountRepositoryDatabase<\/a>"],[100,3,"<a href=\"Repository\/TransactionRepositoryDatabase.php.html#10\">App\\Infra\\Repository\\TransactionRepositoryDatabase<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,1,"<a href=\"Controller\/AccountController.php.html#15\">App\\Infra\\Controller\\AccountController::__construct<\/a>"],[0,1,"<a href=\"Controller\/AccountController.php.html#23\">App\\Infra\\Controller\\AccountController::create<\/a>"],[0,1,"<a href=\"Controller\/CreateAccountValidator.php.html#18\">App\\Infra\\Controller\\CreateAccountValidator::validate<\/a>"],[0,1,"<a href=\"Controller\/CreateTransactionValidator.php.html#14\">App\\Infra\\Controller\\CreateTransactionValidator::__construct<\/a>"],[0,1,"<a href=\"Controller\/CreateTransactionValidator.php.html#18\">App\\Infra\\Controller\\CreateTransactionValidator::validate<\/a>"],[0,1,"<a href=\"Controller\/MainController.php.html#10\">App\\Infra\\Controller\\MainController::__construct<\/a>"],[0,2,"<a href=\"Controller\/MainController.php.html#31\">App\\Infra\\Controller\\MainController::execute<\/a>"],[0,2,"<a href=\"Controller\/MainController.php.html#42\">App\\Infra\\Controller\\MainController::validateRoute<\/a>"],[0,1,"<a href=\"Controller\/TransactionController.php.html#24\">App\\Infra\\Controller\\TransactionController::create<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsAlphanumeric.php.html#7\">App\\Infra\\Controller\\Validator\\IsAlphanumeric::validate<\/a>"],[100,4,"<a href=\"Controller\/Validator\/IsBetween.php.html#7\">App\\Infra\\Controller\\Validator\\IsBetween::validate<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsEmail.php.html#7\">App\\Infra\\Controller\\Validator\\IsEmail::validate<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsIn.php.html#7\">App\\Infra\\Controller\\Validator\\IsIn::validate<\/a>"],[100,2,"<a href=\"Controller\/Validator\/IsInt.php.html#7\">App\\Infra\\Controller\\Validator\\IsInt::validate<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsMax.php.html#7\">App\\Infra\\Controller\\Validator\\IsMax::validate<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsMin.php.html#7\">App\\Infra\\Controller\\Validator\\IsMin::validate<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsRequired.php.html#8\">App\\Infra\\Controller\\Validator\\IsRequired::validate<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsSame.php.html#7\">App\\Infra\\Controller\\Validator\\IsSame::validate<\/a>"],[100,3,"<a href=\"Controller\/Validator\/IsSecure.php.html#7\">App\\Infra\\Controller\\Validator\\IsSecure::validate<\/a>"],[100,6,"<a href=\"Controller\/Validator\/Validator.php.html#10\">App\\Infra\\Controller\\Validator\\Validator::execute<\/a>"],[100,11,"<a href=\"Controller\/Validator\/ValidatorFactory.php.html#7\">App\\Infra\\Controller\\Validator\\ValidatorFactory::execute<\/a>"],[100,1,"<a href=\"DI\/Registry.php.html#10\">App\\Infra\\DI\\Registry::__construct<\/a>"],[100,2,"<a href=\"DI\/Registry.php.html#15\">App\\Infra\\DI\\Registry::getInstance<\/a>"],[100,1,"<a href=\"DI\/Registry.php.html#23\">App\\Infra\\DI\\Registry::set<\/a>"],[100,2,"<a href=\"DI\/Registry.php.html#28\">App\\Infra\\DI\\Registry::get<\/a>"],[100,1,"<a href=\"Database\/MySqlPromiseAdapter.php.html#11\">App\\Infra\\Database\\MySqlPromiseAdapter::__construct<\/a>"],[100,1,"<a href=\"Database\/MySqlPromiseAdapter.php.html#17\">App\\Infra\\Database\\MySqlPromiseAdapter::query<\/a>"],[100,1,"<a href=\"Database\/MySqlPromiseAdapter.php.html#22\">App\\Infra\\Database\\MySqlPromiseAdapter::getLastInsertedId<\/a>"],[100,1,"<a href=\"Database\/MySqlPromiseAdapter.php.html#27\">App\\Infra\\Database\\MySqlPromiseAdapter::close<\/a>"],[100,1,"<a href=\"Gateway\/TransactionReturnFalseGateway.php.html#10\">App\\Infra\\Gateway\\TransactionReturnFalseGateway::process<\/a>"],[100,1,"<a href=\"Gateway\/TransactionReturnTrueGateway.php.html#10\">App\\Infra\\Gateway\\TransactionReturnTrueGateway::process<\/a>"],[0,2,"<a href=\"Http\/Kernel.php.html#10\">App\\Infra\\Http\\Kernel::handle<\/a>"],[0,1,"<a href=\"Http\/Request.php.html#7\">App\\Infra\\Http\\Request::__construct<\/a>"],[0,1,"<a href=\"Http\/Request.php.html#17\">App\\Infra\\Http\\Request::createFromGlobals<\/a>"],[0,1,"<a href=\"Http\/Request.php.html#22\">App\\Infra\\Http\\Request::getPathInfo<\/a>"],[0,1,"<a href=\"Http\/Request.php.html#27\">App\\Infra\\Http\\Request::getMethod<\/a>"],[0,1,"<a href=\"Http\/Response.php.html#7\">App\\Infra\\Http\\Response::__construct<\/a>"],[0,1,"<a href=\"Http\/Response.php.html#15\">App\\Infra\\Http\\Response::send<\/a>"],[100,1,"<a href=\"Repository\/AccountRepositoryDatabase.php.html#17\">App\\Infra\\Repository\\AccountRepositoryDatabase::__construct<\/a>"],[100,1,"<a href=\"Repository\/AccountRepositoryDatabase.php.html#21\">App\\Infra\\Repository\\AccountRepositoryDatabase::save<\/a>"],[100,2,"<a href=\"Repository\/AccountRepositoryDatabase.php.html#32\">App\\Infra\\Repository\\AccountRepositoryDatabase::getByEmailAndDocument<\/a>"],[100,2,"<a href=\"Repository\/AccountRepositoryDatabase.php.html#46\">App\\Infra\\Repository\\AccountRepositoryDatabase::get<\/a>"],[100,1,"<a href=\"Repository\/AccountRepositoryDatabase.php.html#57\">App\\Infra\\Repository\\AccountRepositoryDatabase::update<\/a>"],[100,1,"<a href=\"Repository\/TransactionRepositoryDatabase.php.html#12\">App\\Infra\\Repository\\TransactionRepositoryDatabase::__construct<\/a>"],[100,1,"<a href=\"Repository\/TransactionRepositoryDatabase.php.html#16\">App\\Infra\\Repository\\TransactionRepositoryDatabase::save<\/a>"],[100,1,"<a href=\"Repository\/TransactionRepositoryDatabase.php.html#23\">App\\Infra\\Repository\\TransactionRepositoryDatabase::update<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
