@@ -11,6 +11,8 @@ use App\Infra\DI\Registry;
 use App\Infra\Repository\AccountRepositoryDatabase;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use ValueError;
 
 
 class CreateAccountTest extends TestCase
@@ -186,7 +188,7 @@ class CreateAccountTest extends TestCase
             "password",
             "test",
         );
-        $this->expectException(Exception::class);
+        $this->expectException(BadRequestException::class);
         $signup->execute($input);
         $connection->close();
     }

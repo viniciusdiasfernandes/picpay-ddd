@@ -9,15 +9,14 @@ use App\Infra\Gateway\EmailSystemGateway;
 use App\Infra\Gateway\TransactionReturnTrueGateway;
 use App\Infra\Repository\TransactionRepositoryDatabase;
 use Exception;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TransactionController
 {
-    /**
-     * @throws Exception
-     */
-    public function create(Request $request): Response
+    public function create(Request $request): JsonResponse
     {
         CreateTransactionValidator::validate($request);
         $payload = $request->getPayload();
@@ -32,7 +31,13 @@ class TransactionController
         $transactionGateway = new TransactionReturnTrueGateway();
         $emailSystemGateway = new EmailSystemGateway();
         $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway, $emailSystemGateway);
-        $output = $createTransaction->execute($input);
-        return new Response(json_encode($output), Response::HTTP_CREATED);
+        try {
+            $output = $createTransaction->execute($input);
+        } catch (BadRequestException $e) {
+            return new JsonResponse(["Bad Request" => $e->getMessage()], $e->getCode());
+        } catch (Exception $e) {
+            return new JsonResponse(["Error" => $e->getMessage()], $e->getCode());
+        }
+        return new JsonResponse($output, Response::HTTP_CREATED);
     }
 }
