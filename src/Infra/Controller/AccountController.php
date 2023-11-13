@@ -6,6 +6,7 @@ use App\Application\UseCases\Signup;
 use App\Application\UseCases\DTO\SignupInput;
 use App\Application\UseCases\DTO\SignupOutput;
 use App\Infra\DI\Registry;
+use App\Infra\Http\Response;
 use Exception;
 use stdClass;
 
@@ -19,8 +20,9 @@ class AccountController
     /**
      * @throws Exception
      */
-    public function create(array $params): SignupOutput
+    public function create(): Response
     {
+        $params = (array)json_decode(file_get_contents("php://input"));
         CreateAccountValidator::validate($params);
         $input = new SignupInput(
             firstName: $params['name'],
@@ -30,6 +32,7 @@ class AccountController
             password: $params['password'],
             type: $params['type']
         );
-        return Signup::execute($input);
+        $output = Signup::execute($input);
+        return new Response(json_encode($output));
     }
 }

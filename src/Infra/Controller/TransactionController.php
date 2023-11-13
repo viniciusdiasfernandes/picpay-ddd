@@ -10,6 +10,7 @@ use App\Application\UseCases\CreateTransaction;
 use App\Infra\Database\MySqlPromiseAdapter;
 use App\Infra\DI\Registry;
 use App\Infra\Gateway\TransactionReturnTrueGateway;
+use App\Infra\Http\Response;
 use App\Infra\Repository\TransactionRepositoryDatabase;
 use App\Infra\Repository\AccountRepositoryDatabase;
 use Exception;
@@ -20,8 +21,10 @@ class TransactionController
     /**
      * @throws Exception
      */
-    public function create(array $params): TransactionOutput
+    public function create(): Response
     {
+        $params = (array)json_decode(file_get_contents("php://input"));
+        CreateTransactionValidator::validate($params);
         $input = new TransactionInput(
             amount: $params['amount'],senderId: $params['senderId'],receiverId: $params['receiverId'],timestamp: time()
         );
@@ -29,6 +32,7 @@ class TransactionController
         $transactionRepository = new TransactionRepositoryDatabase($connection);
         $transactionGateway = new TransactionReturnTrueGateway();
         $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway);
-        return $createTransaction->execute($input);
+        $output = $createTransaction->execute($input);
+        return new Response(json_encode($output), 201);
     }
 }

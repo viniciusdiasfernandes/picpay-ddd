@@ -24,8 +24,8 @@ class MainController
                 "/"
             ]
         ];
-//        $this->validateRoute($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"]);
-//        $this->execute($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"]);
+        $this->validateRoute($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"]);
+        $this->execute($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"]);
     }
 
     public function execute(string $method, string $uri)
