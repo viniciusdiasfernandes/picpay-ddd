@@ -11,7 +11,7 @@ readonly class SignupOutput
         public string $email,
         public string $type,
         public float  $balance,
-        public int    $userId
+        public int    $accountId
     )
     {
     }

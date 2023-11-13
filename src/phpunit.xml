@@ -18,6 +18,9 @@
             <directory suffix=".php">./Infra</directory>
             <directory prefix=".php-cs-fixer.">.</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">./Infra/Http/Routes</directory>
+        </exclude>
         <report>
             <html outputDirectory="./test/coverage/html"/>
         </report>

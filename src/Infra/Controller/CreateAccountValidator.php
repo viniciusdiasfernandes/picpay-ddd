@@ -2,7 +2,9 @@
 
 namespace App\Infra\Controller;
 
+use App\Application\UseCases\DTO\SignupInput;
 use App\Infra\Controller\Validator\Validator;
+use Symfony\Component\HttpFoundation\Request;
 
 class CreateAccountValidator extends Validator
 {
@@ -15,8 +17,8 @@ class CreateAccountValidator extends Validator
         'type' => 'required|in:common,merchant|max:255',
     ];
 
-    public static function validate($params): void
+    public static function validate(Request $request): void
     {
-        parent::execute($params, self::$rules);
+        parent::execute($request->getPayload()->all(), self::$rules);
     }
 }

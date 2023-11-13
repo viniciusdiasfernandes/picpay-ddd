@@ -27,4 +27,11 @@ class IsIntTest extends TestCase
         $output = IsInt::validate($data, "number");
         $this->assertEmpty($output);
     }
+
+    public function testValidateEmptyValue()
+    {
+        $data = [];
+        $output = IsInt::validate($data, "number");
+        $this->assertEmpty($output);
+    }
 }

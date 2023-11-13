@@ -3,19 +3,17 @@
 namespace Tests\integration;
 
 
-use App\Application\UseCases\Signup;
 use App\Application\UseCases\DTO\SignupInput;
+use App\Application\UseCases\Signup;
 use App\Domain\Account\AccountType;
-use App\Domain\Account\Cpf;
 use App\Infra\Database\MySqlPromiseAdapter;
 use App\Infra\DI\Registry;
 use App\Infra\Repository\AccountRepositoryDatabase;
 use Exception;
 use PHPUnit\Framework\TestCase;
-use ValueError;
 
 
-class CreateUserTest extends TestCase
+class CreateAccountTest extends TestCase
 {
     /**
      * @throws Exception
@@ -38,10 +36,10 @@ class CreateUserTest extends TestCase
             $type,
         );
         $output = $signup->execute($input);
-        $user = $accountRepository->get($output->userId);
-        $this->assertEquals($input->firstName, $user->firstName);
-        $this->assertEquals($input->document, $user->document->getValue());
-        $this->assertEquals($input->email, $user->email->getValue());
+        $account = $accountRepository->get($output->accountId);
+        $this->assertEquals($input->firstName, $account->firstName);
+        $this->assertEquals($input->document, $account->document->getValue());
+        $this->assertEquals($input->email, $account->email->getValue());
         $connection->close();
     }
 
@@ -66,10 +64,10 @@ class CreateUserTest extends TestCase
             $type,
         );
         $output = $signup->execute($input);
-        $user = $accountRepository->get($output->userId);
-        $this->assertEquals($input->firstName, $user->firstName);
-        $this->assertEquals($input->document, $user->document->getValue());
-        $this->assertEquals($input->email, $user->email->getValue());
+        $account = $accountRepository->get($output->accountId);
+        $this->assertEquals($input->firstName, $account->firstName);
+        $this->assertEquals($input->document, $account->document->getValue());
+        $this->assertEquals($input->email, $account->email->getValue());
         $connection->close();
     }
 

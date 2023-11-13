@@ -2,13 +2,11 @@
 
 namespace App\Infra\Controller;
 
-use App\Application\UseCases\Signup;
 use App\Application\UseCases\DTO\SignupInput;
-use App\Application\UseCases\DTO\SignupOutput;
-use App\Infra\DI\Registry;
-use App\Infra\Http\Response;
+use App\Application\UseCases\Signup;
 use Exception;
-use stdClass;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AccountController
 {
@@ -20,19 +18,19 @@ class AccountController
     /**
      * @throws Exception
      */
-    public function create(): Response
+    public function create(Request $request): Response
     {
-        $params = (array)json_decode(file_get_contents("php://input"));
-        CreateAccountValidator::validate($params);
+        CreateAccountValidator::validate($request);
+        $payload = $request->getPayload();
         $input = new SignupInput(
-            firstName: $params['name'],
-            lastName: $params['lastName'],
-            document: $params['document'],
-            email: $params['email'],
-            password: $params['password'],
-            type: $params['type']
+            firstName: $payload->get('name'),
+            lastName: $payload->get('lastName'),
+            document: $payload->get('document'),
+            email: $payload->get('email'),
+            password: $payload->get('password'),
+            type: $payload->get('type')
         );
         $output = Signup::execute($input);
-        return new Response(json_encode($output));
+        return new Response(json_encode($output), Response::HTTP_CREATED);
     }
 }

@@ -2,37 +2,35 @@
 
 namespace App\Infra\Controller;
 
-use App\Application\UseCases\DTO\SignupInput;
-use App\Application\UseCases\DTO\SignupOutput;
-use App\Application\UseCases\DTO\TransactionInput;
-use App\Application\UseCases\DTO\TransactionOutput;
 use App\Application\UseCases\CreateTransaction;
+use App\Application\UseCases\DTO\TransactionInput;
 use App\Infra\Database\MySqlPromiseAdapter;
-use App\Infra\DI\Registry;
 use App\Infra\Gateway\TransactionReturnTrueGateway;
-use App\Infra\Http\Response;
 use App\Infra\Repository\TransactionRepositoryDatabase;
-use App\Infra\Repository\AccountRepositoryDatabase;
 use Exception;
-use stdClass;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TransactionController
 {
     /**
      * @throws Exception
      */
-    public function create(): Response
+    public function create(Request $request): Response
     {
-        $params = (array)json_decode(file_get_contents("php://input"));
-        CreateTransactionValidator::validate($params);
+        CreateTransactionValidator::validate($request);
+        $payload = $request->getPayload();
         $input = new TransactionInput(
-            amount: $params['amount'],senderId: $params['senderId'],receiverId: $params['receiverId'],timestamp: time()
+            amount: $payload->get('amount'),
+            senderId: $payload->get('senderId'),
+            receiverId: $payload->get('receiverId'),
+            timestamp: time()
         );
         $connection = new MySqlPromiseAdapter();
         $transactionRepository = new TransactionRepositoryDatabase($connection);
         $transactionGateway = new TransactionReturnTrueGateway();
         $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway);
         $output = $createTransaction->execute($input);
-        return new Response(json_encode($output), 201);
+        return new Response(json_encode($output), Response::HTTP_CREATED);
     }
 }
