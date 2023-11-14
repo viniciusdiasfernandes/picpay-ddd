@@ -13,6 +13,7 @@ use App\Infra\Gateway\MailerGateway;
 use App\Infra\Gateway\TransactionGateway;
 use Exception;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreateTransaction
 {
@@ -30,12 +31,12 @@ class CreateTransaction
     public function execute(TransactionInput $input): TransactionOutput
     {
         $sender = Registry::getInstance()->get("accountRepository")->get($input->senderId);
-        if (!$sender) throw new BadRequestException("Sender does not exists", 400);
-        if (!$sender->isUserAllowedToTransfer()) throw new BadRequestException("Just common users can do transfers.", 400);
+        if (!$sender) throw new Exception("Sender does not exists", Response::HTTP_UNPROCESSABLE_ENTITY);
+        if (!$sender->isUserAllowedToTransfer()) throw new Exception("Just common users can do transfers.", Response::HTTP_UNPROCESSABLE_ENTITY);
         $receiver = Registry::getInstance()->get("accountRepository")->get($input->receiverId);
-        if (!$receiver) throw new BadRequestException("Receiver do not exists", 400);
-        if ($sender->id === $receiver->id) throw new BadRequestException("You can not send money to yourself", 400);
-        if (!$sender->isBalanceGreaterThenAmountToTransfer($input->amount)) throw new BadRequestException("You can not do this transfer. No balance enough", 400);
+        if (!$receiver) throw new Exception("Receiver do not exists", Response::HTTP_UNPROCESSABLE_ENTITY);
+        if ($sender->id === $receiver->id) throw new Exception("You can not send money to yourself", Response::HTTP_UNPROCESSABLE_ENTITY);
+        if (!$sender->isBalanceGreaterThenAmountToTransfer($input->amount)) throw new Exception("You can not do this transfer. No balance enough", Response::HTTP_UNPROCESSABLE_ENTITY);
         $transaction = Transaction::create($input->amount, $sender->id, $receiver->id);
         $transactionId = $this->transactionRepository->save($transaction);
         $transaction = Transaction::restore($transaction->amount, $transaction->senderId, $transaction->receiverId, $transaction->timestamp, $transaction->status->value, $transactionId);

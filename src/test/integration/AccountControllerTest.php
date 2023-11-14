@@ -15,31 +15,14 @@ class AccountControllerTest extends TestCase
 {
     public function testRouteIsWorking()
     {
-//        $input = [
-//            "name" => "Vinicius",
-//            "lastName" => "Fernandes",
-//            "document"=> GenerateCpf::cpfRandom(),
-//            "email"=> "vini".rand(1000,9999)."@gmail.com",
-//            "password"=> "Teste@1345667",
-//            "type"=> "common"
-//        ];
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_POST, 1);
-//        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($input));
         curl_setopt($curl, CURLOPT_URL, "http://host.docker.internal/signup");
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             "Content-Type:application/json"
         ]);
-//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($curl);
         $this->assertTrue($output);
-//        $this->assertEquals($input["name"], $output->firstName);
-//        $this->assertEquals($input["lastName"], $output->lastName);
-//        $this->assertEquals($input["document"], $output->document);
-//        $this->assertEquals($input["email"], $output->email);
-//        $this->assertEquals($input["type"], $output->type);
-//        $this->assertEquals(0, $output->balance);
-//        $this->assertIsInt($output->accountId);
     }
 
     /**
@@ -66,5 +49,30 @@ class AccountControllerTest extends TestCase
         );
         $response = $accountController->create($request);
         $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
+    }
+
+    public function testCreateThrowException()
+    {
+        $connection = new MySqlPromiseAdapter();
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $accountController = new AccountController();
+        $cpf = GenerateCpf::cpfRandom();
+        $parameters = [
+            "name" => "Vinicius",
+            "lastName" => "Fernandes",
+            "document" => $cpf,
+            "email" => "vini" . rand(1000, 9999) . "@gmail.com",
+            "password" => "Teste@1345667",
+            "type" => "common"
+        ];
+        $request = Request::create(
+            uri: "http://host.docker.internal/signup",
+            method: "POST",
+            parameters: $parameters
+        );
+        $accountController->create($request);
+        $response = $accountController->create($request);
+        $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 }

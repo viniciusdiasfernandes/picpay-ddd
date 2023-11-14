@@ -10,6 +10,7 @@ use App\Infra\Database\MySqlPromiseAdapter;
 use App\Infra\DI\Registry;
 use App\Infra\Repository\AccountRepositoryDatabase;
 use Exception;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use ValueError;
@@ -28,7 +29,7 @@ class CreateAccountTest extends TestCase
         $signup = new Signup();
         $randomEmail = "vinidiax" . rand(1000, 9999) . "@gmail.com";
         $randomCpf = GenerateCpf::cpfRandom();
-        $type = AccountType::Common->value;
+        $type = AccountType::Common;
         $input = new SignupInput(
             "Vinicius",
             "Fernandes",
@@ -56,7 +57,7 @@ class CreateAccountTest extends TestCase
         $signup = new Signup();
         $randomEmail = "vinidiax" . rand(1000, 9999) . "@gmail.com";
         $randomCpf = GenerateCnpj::cnpjRandom();
-        $type = AccountType::Merchant->value;
+        $type = AccountType::Merchant;
         $input = new SignupInput(
             "Vinicius",
             "Fernandes",
@@ -83,7 +84,7 @@ class CreateAccountTest extends TestCase
         Registry::getInstance()->set("accountRepository", $accountRepository);
         $signup = new Signup();
         $randomCpf = GenerateCpf::cpfRandom();
-        $type = AccountType::Common->value;
+        $type = AccountType::Common;
         $input = new SignupInput(
             "Vinicius",
             "Fernandes",
@@ -107,7 +108,7 @@ class CreateAccountTest extends TestCase
         $accountRepository = new AccountRepositoryDatabase($connection);
         Registry::getInstance()->set("accountRepository", $accountRepository);
         $signup = new Signup();
-        $type = AccountType::Common->value;
+        $type = AccountType::Common;
         $input = new SignupInput(
             "Vinicius",
             "Fernandes",
@@ -132,7 +133,7 @@ class CreateAccountTest extends TestCase
         Registry::getInstance()->set("accountRepository", $accountRepository);
         $signup = new Signup();
         $randomCnpj = GenerateCnpj::cnpjRandom();
-        $type = AccountType::Merchant->value;
+        $type = AccountType::Merchant;
         $input = new SignupInput(
             "Vinicius",
             "Fernandes",
@@ -156,7 +157,7 @@ class CreateAccountTest extends TestCase
         $accountRepository = new AccountRepositoryDatabase($connection);
         Registry::getInstance()->set("accountRepository", $accountRepository);
         $signup = new Signup();
-        $type = AccountType::Merchant->value;
+        $type = AccountType::Merchant;
         $input = new SignupInput(
             "Vinicius",
             "Fernandes",
@@ -171,27 +172,6 @@ class CreateAccountTest extends TestCase
         $connection->close();
     }
 
-    /**
-     * @throws Exception
-     */
-    public function testCreateNonexistentAccountType()
-    {
-        $connection = new MySqlPromiseAdapter();
-        $accountRepository = new AccountRepositoryDatabase($connection);
-        Registry::getInstance()->set("accountRepository", $accountRepository);
-        $signup = new Signup();
-        $input = new SignupInput(
-            "Vinicius",
-            "Fernandes",
-            GenerateCpf::cpfRandom(),
-            "vinidiax" . rand(1000, 9999) . "@gmail.com",
-            "password",
-            "test",
-        );
-        $this->expectException(BadRequestException::class);
-        $signup->execute($input);
-        $connection->close();
-    }
 
 
 

@@ -11,8 +11,10 @@ use App\Domain\Account\Email;
 use App\Domain\Account\HashPassword;
 use App\Infra\DI\Registry;
 use Exception;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Exception\ConflictingHeadersException;
+use Symfony\Component\HttpFoundation\Response;
 use ValueError;
 
 class Signup
@@ -22,16 +24,12 @@ class Signup
      */
     public static function execute(SignupInput $input): SignupOutput
     {
-        try {
-            $type = AccountType::from($input->type);
-        } catch (ValueError) {
-            throw new BadRequestException("Invalid account type", 400);
-        }
+        $type = AccountType::from($input->type->value);
         $document = DocumentFactory::generate($type, $input->document);
         $email = new Email($input->email);
         $isAccountAlreadyCreated = Registry::getInstance()->get("accountRepository")->getByEmailAndDocument($email, $document);
         if ($isAccountAlreadyCreated) {
-            throw new ConflictingHeadersException("User already exists", 409);
+            throw new  Exception("User already exists", Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $account = Account::create($input->firstName, $input->lastName, $document, $email, HashPassword::create($input->password), $type, 0);
         $accountId = Registry::getInstance()->get("accountRepository")->save($account);

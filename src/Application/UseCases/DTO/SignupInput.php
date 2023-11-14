@@ -2,6 +2,8 @@
 
 namespace App\Application\UseCases\DTO;
 
+use App\Domain\Account\AccountType;
+
 readonly class SignupInput
 {
     public function __construct(
@@ -10,7 +12,7 @@ readonly class SignupInput
         public string $document,
         public string $email,
         public string $password,
-        public string $type
+        public AccountType $type
     )
     {
     }

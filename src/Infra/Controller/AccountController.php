@@ -4,7 +4,9 @@ namespace App\Infra\Controller;
 
 use App\Application\UseCases\DTO\SignupInput;
 use App\Application\UseCases\Signup;
+use App\Domain\Account\AccountType;
 use Exception;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Exception\ConflictingHeadersException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,9 +20,6 @@ class AccountController
     {
     }
 
-    /**
-     * @throws Exception
-     */
     public function create(Request $request): JsonResponse
     {
         CreateAccountValidator::validate($request);
@@ -31,14 +30,12 @@ class AccountController
             document: $payload->get('document'),
             email: $payload->get('email'),
             password: $payload->get('password'),
-            type: $payload->get('type')
+            type: AccountType::from($payload->get('type'))
         );
         try {
             $output = Signup::execute($input);
-        } catch (ConflictingHeadersException $e) {
-            return new JsonResponse(["Conflict" => $e->getMessage()], $e->getCode());
-        } catch (BadRequestException $e) {
-            return new JsonResponse(["Bad Request" => $e->getMessage()], $e->getCode());
+        } catch (Exception $e) {
+            return new JsonResponse(["Error" => $e->getMessage()], $e->getCode());
         }
         return new JsonResponse($output, Response::HTTP_CREATED);
     }

@@ -29,9 +29,6 @@ class TransactionControllerTest extends TestCase
         $this->assertTrue($output);
     }
 
-    /**
-     * @throws Exception
-     */
     public function testCreateWithSuccess()
     {
         $connection = new MySqlPromiseAdapter();
@@ -57,6 +54,26 @@ class TransactionControllerTest extends TestCase
     /**
      * @throws Exception
      */
+    public function testCreateThrowException()
+    {
+        $connection = new MySqlPromiseAdapter();
+        $accountRepository = new AccountRepositoryDatabase($connection);
+        Registry::getInstance()->set("accountRepository", $accountRepository);
+        $transactionController = new TransactionController();
+        $parameters = [
+            "amount" => 5,
+            "senderId" => 9999999,
+            "receiverId" => 999999999,
+        ];
+        $request = Request::create(
+            uri: "http://host.docker.internal/signup",
+            method: "POST",
+            parameters: $parameters
+        );
+        $response = $transactionController->create($request);
+        $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
+    }
+
     private function createAccount(string $type): int
     {
         $randomEmail = "vinidiax" . rand(1000, 9999) . "@gmail.com";

@@ -33,8 +33,6 @@ class TransactionController
         $createTransaction = new CreateTransaction($transactionRepository, $transactionGateway, $emailSystemGateway);
         try {
             $output = $createTransaction->execute($input);
-        } catch (BadRequestException $e) {
-            return new JsonResponse(["Bad Request" => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {
             return new JsonResponse(["Error" => $e->getMessage()], $e->getCode());
         }
