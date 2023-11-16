@@ -32,7 +32,7 @@ jobs:
 
     - name: Install dependencies
       working-directory: ./src
-      run: composer install --no-progress
+      run: composer install --no-progress --ignore-platform-reqs
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
