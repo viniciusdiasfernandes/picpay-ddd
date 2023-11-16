@@ -1,4 +1,11 @@
 {
+    "name": "DDD Project",
+    "type": "project",
+    "description": "Studying project with DDD",
+    "type": "project",
+    "license": "proprietary",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^8.2",
         "ext-mysqli": "*",
@@ -20,7 +27,5 @@
         "psr-4": {
             "Tests\\": "test"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
