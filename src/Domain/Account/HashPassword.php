@@ -2,7 +2,7 @@
 
 namespace App\Domain\Account;
 
-readonly class HashPassword implements Password
+class HashPassword implements Password
 {
     private function __construct(public string $value, public string $salt)
     {
