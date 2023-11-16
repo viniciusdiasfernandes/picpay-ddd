@@ -1,6 +1,6 @@
 <?php
 
-namespace App\test\unit\Http;
+namespace App\test\integration\Http;
 
 use App\Infra\Database\MySqlPromiseAdapter;
 use App\Infra\DI\Registry;
